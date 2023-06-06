@@ -310,7 +310,7 @@ async function run() {
   ];
 
   const result = await paymentCollection.aggregate(pipeline).toArray();
-  console.log(result);
+  // console.log(result);
 
   res.json(result);
 });
