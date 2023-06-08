@@ -15,7 +15,7 @@ const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
 
 //jwt
 var jwt = require('jsonwebtoken');
-
+//done
 //JWT verify valid token  middleware
 const verifyJWT = (req, res, next) => {
   // console.log("jami", req.headers)
@@ -55,7 +55,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     const database = client.db("bistroDb");
     const menuCollection = database.collection("menu");
     const reviewCollection = database.collection("reviews");
@@ -65,7 +65,7 @@ async function run() {
 
 
 
-    //jwt
+    //jwt //done
     app.post('/jwt', (req, res) => {
       // client theke asbe
       const user = req.body
@@ -74,6 +74,7 @@ async function run() {
       res.send({ token })
     })
     // use verifyAdmin after verifyJwt-middleware
+    //done
     const verifyAdmin = async (req, res, next) => {
       const email = req.decoded.email
       const query = { email: email }
@@ -88,6 +89,7 @@ async function run() {
 
 
     //   user related api- get user
+    //done
     app.get("/users", verifyJWT, verifyAdmin, async (req, res) => {
 
       const result = await userCollection.find().toArray()
@@ -98,6 +100,7 @@ async function run() {
     // security layer : verifyJWT
     //email same 
     //check admin
+      //done
     app.get('/users/admin/:email', verifyJWT, async (req, res) => {
       const email = req.params.email
       if (req.decoded.email !== email) {
@@ -111,6 +114,7 @@ async function run() {
     })
 
     //update user to admin
+      //done
     app.patch('/users/admin/:id', async (req, res) => {
       const id = req.params.id
       const filter = { _id: new ObjectId(id) }
@@ -124,6 +128,7 @@ async function run() {
       res.send(result)
     })
     //update user to user
+      //done
     app.patch('/users/user/:id', async (req, res) => {
       const id = req.params.id
       const filter = { _id: new ObjectId(id) }
@@ -137,7 +142,7 @@ async function run() {
       res.send(result)
     })
 
-
+    //done
     //user related api- add user
     app.post('/users', async (req, res) => {
       const user = req.body
@@ -318,7 +323,7 @@ async function run() {
 
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
